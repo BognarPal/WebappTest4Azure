@@ -27,4 +27,11 @@ jobs:
         docker push ghcr.io/bognarpal/webtest4azure:$IMAGE_TAG
         docker push ghcr.io/bognarpal/webtest4azure:latest
         
-        
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'Test-13A-B'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_30b7591f2e544ccdbb77948e6d5d825a }}
+        images: 'ghcr.io/bognarpal/webtest4azure:${{ env.IMAGE_TAG }}'        
